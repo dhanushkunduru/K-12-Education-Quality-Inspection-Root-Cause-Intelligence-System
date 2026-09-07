@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Environment files
+.env
+.env.*
+!.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
+
+# Build output
+/dist/
+/build/
+coverage/
+**/dist/
+**/build/
+**/coverage/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# OS / temp files
+*.tmp
+*.swp
+
+# Local generated artifacts
+.cache/
+.parcel-cache/
+
+# Keep source/config files tracked
+!frontend/vercel.json
+!supabase/**
