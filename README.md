@@ -4,10 +4,10 @@ An enterprise-grade, full-stack AI decision-support platform designed for K-12 S
 
 ---
 
-## Key Features
+## 🌟 Key System Capabilities
 
 - **Quality Overview Dashboard**: Real-time operational intelligence featuring 8 animated KPI cards with sparklines, 6 interactive Recharts graphs (Pareto 80/20 distribution, Quality Trends, Defect Severity, Domain Breakdown, Campus Matrix), and Gemini AI Intelligence feed with human governance actions (*Approve*, *Reject*, *Override with Reason*).
-- **Digital Inspection Execution Runner**: Interactive sampling checklist runner supporting *Pass*, *Fail*, *N/A* decisions, quantitative measurement entries, evidence document/photo upload preview, and instant defect logging.
+- **Digital Inspection Sampling Runner**: Interactive checklist runner supporting *Pass*, *Fail*, *N/A* decisions, quantitative measurement entries, evidence document/photo upload preview, and instant defect logging.
 - **Defects Review & Workflow Tracker**: Dual gallery and data table views with severity badges, recurrence counters, and visual multi-stage resolution pipeline stepper.
 - **AI Defect Detection Workspace**: Direct evidence analyzer powered by **Google Gemini 1.5 Pro API**, step-by-step processing state animation, empirical confidence scoring, evidence extraction, and human override audit logging.
 - **Root Cause Intelligence**: Pareto category distribution, empirical contributing factor correlation ranking, and hypothesis breakdown distinguishing AI-suggested recommendations from human-approved decisions.
@@ -19,31 +19,37 @@ An enterprise-grade, full-stack AI decision-support platform designed for K-12 S
 
 ---
 
-## Tech Stack
+## 🏗️ Architecture & Technology Stack
 
-### Frontend
-- **Framework**: React 18 + Vite
-- **Styling**: Tailwind CSS (Enterprise Glassmorphism Design System)
-- **Icons**: Lucide React
-- **Data Visualization**: Recharts
-- **HTTP Client**: Axios with fallback simulation service layer
-
-### Backend
-- **Runtime**: Node.js + Express.js
-- **AI Integration**: Google Gemini API (`@google/genai` & REST API)
-- **Security & Validation**: Helmet, CORS, JWT, Zod
-- **Database**: Supabase PostgreSQL (or in-memory mock state fallback)
-
-### Database
-- **Engine**: Supabase PostgreSQL
-- **Schema**: 25+ relational DDL tables with UUIDs, indexes, FK constraints, and Row Level Security (RLS) policies (`supabase/migrations/0001_init.sql`).
+```
+[ USER BROWSER ]
+       │
+   Vercel / Render (Production Deployed HTTPS)
+       │
+  ┌────┴───────────────────────────────┐
+  │ Frontend: React 18 + Vite          │
+  │ Styling: Tailwind CSS (Glassmorphism)│
+  │ Data Viz: Recharts                 │
+  └────┬───────────────────────────────┘
+       │ REST APIs (/api/*)
+  ┌────┴───────────────────────────────┐
+  │ Backend: Node.js + Express API     │
+  │ Security: Helmet, CORS, JWT, Zod   │
+  └────┬──────────────┬────────────────┘
+       │              │
+       ▼              ▼
+[ Supabase PostgreSQL ] [ Google Gemini 1.5 Pro API ]
+(SQL Migrations & RLS)   (Backend-Only AI Engine)
+```
 
 ---
 
-## Project Structure
+## 📁 Repository Structure
 
 ```
 .
+├── api/
+│   └── index.js             # Vercel serverless entry handler for Express backend
 ├── frontend/
 │   ├── src/
 │   │   ├── components/ui/   # Reusable UI component suite (Button, Card, Badge, KPICard, AIInsightCard, DataTable, Modal, Drawer, CommandPalette, etc.)
@@ -51,52 +57,48 @@ An enterprise-grade, full-stack AI decision-support platform designed for K-12 S
 │   │   ├── layouts/         # AppLayout shell with collapsible sidebar & header
 │   │   ├── pages/           # Dashboard, Inspections, Defects, AI Workspace, Root Cause, CAPA, Reports, Notifications, Users, Audit Logs, Settings
 │   │   ├── services/        # Axios API client with fallback service layer
-│   │   ├── App.jsx          # React Router DOM routes
-│   │   ├── index.css        # Tailwind design tokens & glassmorphism styles
-│   │   └── main.jsx
+│   │   └── App.jsx          # React Router DOM routes
 │   ├── package.json
-│   └── vercel.json
-│
+│   └── vercel.json          # Frontend Vercel SPA rewrite rules
 ├── backend/
 │   ├── src/
 │   │   ├── data/            # Realistic K-12 operational domain mock store
 │   │   ├── routes/          # REST API endpoints (/api/dashboard, /api/inspections, /api/ai/analyze, /api/capa, etc.)
-│   │   ├── services/        # Gemini AI integration service
+│   │   ├── services/        # Gemini AI integration service (@google/generative-ai)
 │   │   └── server.js        # Express server entry point
 │   ├── package.json
 │   └── .env.example
-│
 ├── supabase/
 │   └── migrations/
 │       └── 0001_init.sql    # PostgreSQL DDL schema & RLS policies
-│
+├── vercel.json              # Unified root Vercel deployment configuration
 ├── README.md
 └── DEPLOYMENT_GUIDE.md
 ```
 
 ---
 
-## Quick Start (Local Development)
+## ⚡ Local Development Setup
 
-### 1. Backend Setup
+### 1. Backend Server
 ```bash
 cd backend
 npm install
-npm run dev
+npm start
 ```
-The Express backend will start at `http://localhost:5000` with health check available at `http://localhost:5000/api/health`.
+*Health Check*: `http://localhost:5000/api/health`
 
-### 2. Frontend Setup
+### 2. Frontend Web App
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-The React Vite frontend will start at `http://localhost:5173`.
+*App URL*: `http://localhost:5173`
 
 ---
 
-## Environment Variables
+## 🔐 Environment Variables
 
 ### Backend (`backend/.env`)
 ```env
@@ -105,12 +107,12 @@ NODE_ENV=development
 FRONTEND_URL=http://localhost:5173
 JWT_SECRET=replace_with_secure_jwt_secret
 
-# Optional: Supabase Credentials
+# Supabase Credentials (Optional: Service will use in-memory seed store if unconfigured)
 SUPABASE_URL=https://your-supabase-project.supabase.co
 SUPABASE_ANON_KEY=your-supabase-anon-key
 SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
 
-# Optional: Google Gemini AI Integration (Rule engine fallback active if unconfigured)
+# Google Gemini AI Integration (Rule engine fallback active if unconfigured)
 GEMINI_API_KEY=your-gemini-api-key-here
 GEMINI_MODEL=gemini-1.5-pro
 ```
@@ -119,3 +121,13 @@ GEMINI_MODEL=gemini-1.5-pro
 ```env
 VITE_API_BASE_URL=http://localhost:5000/api
 ```
+
+---
+
+## 🛡️ Security & Governance Compliance
+
+- [x] **No Secrets Committed**: All API keys, JWT secrets, and database credentials are excluded via `.gitignore`.
+- [x] **Backend-Only AI Calling**: Google Gemini API key is isolated on backend servers and never exposed to the client browser.
+- [x] **Strict CORS Policy**: Restricted to configured production frontend origins.
+- [x] **Database Security**: Supabase PostgreSQL Row Level Security (RLS) policies enabled.
+- [x] **Human Oversight**: High-impact CAPA decisions and AI overrides require explicit user authorization and reason logging.
