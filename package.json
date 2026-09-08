@@ -5,8 +5,11 @@
   "description": "K-12 Education Quality Inspection & Root-Cause Intelligence System",
   "main": "api/index.js",
   "scripts": {
-    "build": "npm --prefix frontend install && npm --prefix frontend run build && node -e \"const fs=require('fs'); ['dist', 'frontend/frontend/dist'].forEach(d => { fs.mkdirSync(d, {recursive: true}); fs.cpSync('frontend/dist', d, {recursive: true}); });\"",
+    "build": "npm --prefix frontend install && npm --prefix frontend run build",
     "start": "node backend/src/server.js"
+  },
+  "engines": {
+    "node": ">=18.x"
   },
   "dependencies": {
     "@google/generative-ai": "^0.17.0",

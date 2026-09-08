@@ -44,3 +44,4 @@ Thumbs.db
 # Keep source/config files tracked
 !frontend/vercel.json
 !supabase/**
+.vercel

@@ -6,13 +6,13 @@ This guide details step-by-step instructions for deploying the **K-12 Education 
 
 ## 🎯 Supported Deployment Architectures
 
-### Option A: Unified Vercel Monorepo Deployment (Recommended)
+### Option A: Vercel Frontend + Render Backend (Live Configuration)
 - **Frontend**: Vercel Static Web Hosting (`frontend/dist`)
-- **Backend API**: Vercel Serverless Functions (`api/index.js`)
+- **Backend API**: Render (`https://k-12-education-quality-inspection-root.onrender.com`)
 - **Database**: Supabase PostgreSQL
 - **AI Engine**: Google Gemini 1.5 Pro API
 
-### Option B: Decoupled Vercel (Frontend) + Render (Backend)
+### Option B: Separate Vercel Frontend + Render Backend
 - **Frontend Application**: Vercel (`frontend/`)
 - **Backend Web Service**: Render / Railway (`backend/`)
 - **Database**: Supabase PostgreSQL
@@ -30,11 +30,11 @@ This guide details step-by-step instructions for deploying the **K-12 Education 
 
 ---
 
-## 2. Option A: Deploy Entire App on Vercel
+## 2. Option A: Deploy Frontend on Vercel and Connect Render Backend
 
 1. Connect your GitHub repository `https://github.com/dhanushkunduru/K-12-Education-Quality-Inspection-Root-Cause-Intelligence-System.git` on [Vercel](https://vercel.com).
-2. Root Directory: `./` (leave default).
-3. Vercel will automatically detect `vercel.json` and build the frontend using `npm run build` while deploying `api/index.js` as serverless functions.
+2. Root Directory: `frontend`.
+3. Vercel builds the React frontend. The frontend is already configured to call the live Render API.
 4. In Vercel Project Settings -> Environment Variables, configure:
    - `JWT_SECRET`: `[Your Random Secret]`
    - `SUPABASE_URL`: `[Your Supabase URL]`
@@ -42,8 +42,22 @@ This guide details step-by-step instructions for deploying the **K-12 Education 
    - `SUPABASE_SERVICE_ROLE_KEY`: `[Your Supabase Service Role Key]`
    - `GEMINI_API_KEY`: `[Your Google Gemini API Key]`
    - `GEMINI_MODEL`: `gemini-1.5-pro`
-   - `VITE_API_BASE_URL`: `/api`
-5. Deploy. The health check will be available at `https://your-vercel-domain.vercel.app/api/health`.
+   - `VITE_API_BASE_URL`: `https://k-12-education-quality-inspection-root.onrender.com/api`
+5. Deploy. The frontend is available at `https://k12-quality-inspection-system.vercel.app`.
+
+### Vercel dashboard values
+
+Use these exact values if Vercel asks for build settings:
+
+| Setting | Value |
+| --- | --- |
+| Framework Preset | Other |
+| Root Directory | `.` |
+| Build Command | `npm run build` |
+| Output Directory | `frontend/dist` |
+| Install Command | `npm install` |
+
+Open `https://k-12-education-quality-inspection-root.onrender.com/api/health` to verify the backend. Then open the Vercel frontend and log in with any email and role; the demo backend accepts the role and provides seeded data.
 
 ---
 
@@ -68,9 +82,14 @@ This guide details step-by-step instructions for deploying the **K-12 Education 
 
 ### Step 2: Vercel Frontend Deployment
 1. Create a Vercel project with **Root Directory** set to `frontend`.
-2. Configure Environment Variable:
-   - `VITE_API_BASE_URL`: `https://your-backend.onrender.com/api`
+2. The frontend production client is already configured for the live Render backend:
+   - `VITE_API_BASE_URL`: `https://k-12-education-quality-inspection-root.onrender.com/api`
 3. Deploy. `frontend/vercel.json` handles SPA routing rewrites.
+4. Copy the Vercel production URL, then update the Render service environment variable:
+   - `FRONTEND_URL`: `https://your-app.vercel.app`
+5. Redeploy the Render service so CORS allows the Vercel frontend.
+
+The Render backend health check is currently live at `https://k-12-education-quality-inspection-root.onrender.com/api/health`.
 
 ---
 

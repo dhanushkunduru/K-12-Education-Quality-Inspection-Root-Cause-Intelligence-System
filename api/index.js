@@ -10,8 +10,8 @@ app.use(cors({ origin: '*', credentials: true }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Mount API routes
-app.use('/api', apiRoutes);
+// Vercel strips the /api function prefix before invoking this handler.
+app.use('/', apiRoutes);
 
 // Serverless Handler
 module.exports = app;

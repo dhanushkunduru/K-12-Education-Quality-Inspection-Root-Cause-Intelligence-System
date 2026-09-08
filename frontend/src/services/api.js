@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
+const productionApiUrl = 'https://k-12-education-quality-inspection-root.onrender.com/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
+  || (import.meta.env.PROD ? productionApiUrl : '/api');
 
 const client = axios.create({
   baseURL: API_BASE_URL,
