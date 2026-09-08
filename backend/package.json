@@ -4,6 +4,7 @@
   "description": "Backend API service for K-12 Quality Inspection & Root-Cause Intelligence System",
   "main": "src/server.js",
   "scripts": {
+    "build": "echo Backend build ready",
     "start": "node src/server.js",
     "dev": "node --watch src/server.js"
   },
