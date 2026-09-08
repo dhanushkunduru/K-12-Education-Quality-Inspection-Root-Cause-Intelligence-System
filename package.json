@@ -5,7 +5,7 @@
   "description": "K-12 Education Quality Inspection & Root-Cause Intelligence System",
   "main": "api/index.js",
   "scripts": {
-    "build": "npm install --prefix frontend && npm run build --prefix frontend",
+    "build": "npm --prefix frontend install && npm --prefix frontend run build",
     "start": "node backend/src/server.js"
   },
   "dependencies": {
