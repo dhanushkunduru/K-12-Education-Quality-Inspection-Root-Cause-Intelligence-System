@@ -4,7 +4,7 @@
   "description": "Backend API service for K-12 Quality Inspection & Root-Cause Intelligence System",
   "main": "src/server.js",
   "scripts": {
-    "build": "echo Backend build ready",
+    "build": "npm --prefix ../frontend install && npm --prefix ../frontend run build && node -e \"const fs=require('fs'); ['dist', '../dist', '../frontend/dist'].forEach(d => { try { fs.mkdirSync(d, {recursive: true}); fs.cpSync('../frontend/dist', d, {recursive: true}); } catch(e){} });\"",
     "start": "node src/server.js",
     "dev": "node --watch src/server.js"
   },
